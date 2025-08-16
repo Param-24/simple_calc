@@ -14,29 +14,22 @@ fn main(){
         .expect("Please enter operation you want to perform on the numbers");
     let op = op.trim();
 
-    let mut result:u16 = 0;
-    match op {
-        "+" | "add" | "sum" => {
-            for i in nums {
-                result+=i;
-            }
-        },
+    let result:u16 = match op {
+        "+" | "add" | "sum" => nums.iter().sum(),
         "-" | "sub" | "diff" => {
-            for i in nums {
-                result-=i;
-            }
+            let (first_elm, other_elms) = nums.split_first().unwrap();
+            other_elms.iter().fold(*first_elm, |acc, &x| acc - x)
         },
-        "*" | "mult" | "prod" => {
-            for i in nums {
-                result*=i;
-            }
-        },
+        "*" | "mult" | "prod" => nums.iter().product(),
         "/" | "div" => {
-            for i in nums {
-                result/=i;
+            let (first_elm, other_elms) = nums.split_first().unwrap();
+            if other_elms.contains(&0){
+                eprintln!("Error!! Division by zero.");
+                return;
             }
+            other_elms.iter().fold(*first_elm, |acc, &x| acc / x)
         },
-        _ => eprint!("Enter a valid operation")
+        _ => return,
     };
     println!("The result for the operation is: {result}");
 

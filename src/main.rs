@@ -2,7 +2,7 @@ use std::{env,
     io::{self, Write}};
 
 fn main(){
-    let nums:Vec<u16> = env::args()
+    let nums:Vec<i32> = env::args()
                         .skip(1)
                         .map(|arg| arg.parse().expect("Enter numbers as command line arguments."))
                         .collect();
@@ -14,7 +14,7 @@ fn main(){
         .expect("Please enter operation you want to perform on the numbers");
     let op = op.trim();
 
-    let result:u16 = match op {
+    let result:i32 = match op {
         "+" | "add" | "sum" => nums.iter().sum(),
         "-" | "sub" | "diff" => {
             let (first_elm, other_elms) = nums.split_first().unwrap();
